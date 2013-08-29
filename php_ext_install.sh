@@ -20,7 +20,7 @@ export LANG="en_US.UTF-8"
 ##                                      ##
 ##  2013/03/20  Fix script error        ##
 ##  2012/12/20  Fix Bugs                ##
-##  2012/06/03  Add install memcached   ##
+##  2012/06/03  Add install memcache    ##
 ##  2012/02/01  Create script           ##
 ##                                      ##
 ##########################################
