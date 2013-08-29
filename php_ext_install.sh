@@ -271,8 +271,7 @@ help_info()
 	echo "	mcrypt:		Mcrypt file encryption program for unix.                                                                    "
 	echo "	autoconf:	Autoconf is an extensible shell scripts to automatically configure software source code packages.           "
 	echo "	memcache:	memcached is a extension.                                                                                   "
-	echo "	pdo_mysql:	pdo_mysql is a extension.                                                                                   "
-        echo "  ossec-hids: a OS security tools                                                                                         "	
+	echo "	pdo_mysql:	pdo_mysql is a extension.                                                                                   "                                                                                      "	
 	echo ""
 	echo "--------------------------------------------------------------------------------------------------------------------------"
 }
