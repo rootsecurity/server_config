@@ -2,13 +2,15 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export LANG="en_US.UTF-8"
 
+
+
 ##########################################
-##					                            ##
-##	$Name: php_ext_install.sh	          ##
-##	$Time: 2013/06/19		                ##
-##	$Version:0.1.8           	          ##
+##					                    ##
+##	$Name: php_ext_install.sh	        ##
+##	$Time: 2013/06/19		            ##
+##	$Version:0.1.8           	        ##
 ##  $Author:rootsecurity                ##
-##					                            ##
+##					                    ##
 ##########################################
 
 ##########################################
