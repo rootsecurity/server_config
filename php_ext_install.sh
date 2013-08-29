@@ -263,7 +263,7 @@ help_info()
 	clear
 	echo "--------------------------------------------------------help info---------------------------------------------------------"
 	echo ""
-  echo "  init:       init system software                                                                                        "
+        echo "  init:       init system software                                                                                        "
 	echo "	autoconf:	autoconf is GNU environment project.                                                                        "
 	echo "	libiconv:	This library can be used with LD_PRELOAD, to override the iconv*.                                           "	
 	echo "	libmcrypt:	The companion to MCrypt is Libmcrypt.                                                                       "	
@@ -272,7 +272,7 @@ help_info()
 	echo "	autoconf:	Autoconf is an extensible shell scripts to automatically configure software source code packages.           "
 	echo "	memcache:	memcached is a extension.                                                                                   "
 	echo "	pdo_mysql:	pdo_mysql is a extension.                                                                                   "
-  echo "  ossec-hids: a OS security tools                                                                                         "	
+        echo "  ossec-hids: a OS security tools                                                                                         "	
 	echo ""
 	echo "--------------------------------------------------------------------------------------------------------------------------"
 }
