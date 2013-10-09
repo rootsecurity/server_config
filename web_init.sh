@@ -1,9 +1,4 @@
 #!/bin/bash
-############################################
-##                                        ##
-##        仅在CentOS6系统有效             ##
-##                                        ##
-############################################
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export LANG=en_US.UTF-8
 ipaddr=`ifconfig eth0 | grep "inet addr" | awk '{print $2}'|grep -v "127.0.0.1"|tr -d "addr:"|awk '{print $1}'`
