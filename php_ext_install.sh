@@ -262,8 +262,8 @@ help_info()
 {
 	clear
 	echo "--------------------------------------------------------help info---------------------------------------------------------"
-	echo ""
-        echo "  init:       init system software                                                                                        "
+	echo "																															"
+        echo "  init:           init system software                                                                                        "
 	echo "	autoconf:	autoconf is GNU environment project.                                                                        "
 	echo "	libiconv:	This library can be used with LD_PRELOAD, to override the iconv*.                                           "	
 	echo "	libmcrypt:	The companion to MCrypt is Libmcrypt.                                                                       "	
@@ -271,8 +271,8 @@ help_info()
 	echo "	mcrypt:		Mcrypt file encryption program for unix.                                                                    "
 	echo "	autoconf:	Autoconf is an extensible shell scripts to automatically configure software source code packages.           "
 	echo "	memcache:	memcached is a extension.                                                                                   "
-	echo "	pdo_mysql:	pdo_mysql is a extension.                                                                                   "                                                                                      "	
-	echo ""
+	echo "	pdo_mysql:	pdo_mysql is a extension.                                                                                   "	
+	echo "																															"
 	echo "--------------------------------------------------------------------------------------------------------------------------"
 }
 
@@ -307,7 +307,7 @@ case $1 in
 	pdo_mysql)
 		install_pdo_mysql
 		;;
-	--help|-h)
+	--help|-h|-help)
 		help_info
 		;;
 	*)
