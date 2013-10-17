@@ -263,7 +263,7 @@ help_info()
 	clear
 	echo "--------------------------------------------------------help info---------------------------------------------------------"
 	echo "																															"
-        echo "          init:           init system software                                                                                        "
+        echo "        init:           init system software                                                                                        "
 	echo "	autoconf:	autoconf is GNU environment project.                                                                        "
 	echo "	libiconv:	This library can be used with LD_PRELOAD, to override the iconv*.                                           "	
 	echo "	libmcrypt:	The companion to MCrypt is Libmcrypt.                                                                       "	
