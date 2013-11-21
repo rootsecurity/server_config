@@ -18,7 +18,7 @@ sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/httpd/co
 sed -i 's/expose_php = On/expose_php = Off/g' /etc/php.ini
 sed -i 's/ServerTokens OS/ServerTokens Prod/g' /etc/httpd/conf/httpd.conf
 sed -i 's/ServerSignature On/ServerSignature Off/g' /etc/httpd/conf/httpd.conf
-sed -i 's/ServerAdmin root@localhost/ServerAdmin security@dangdang.com/g' /etc/httpd/conf/httpd.conf
+sed -i 's/ServerAdmin root@localhost/ServerAdmin auto@usa.gov/g' /etc/httpd/conf/httpd.conf
 sed -i 's/extension=module.so/;extension=module.so/g' /etc/php.d/mcrypt.ini
 sed -i 's/#ServerName www.example.com:80/ServerName '$ipaddr':80/g' /etc/httpd/conf/httpd.conf
 sed -i 's/extensions=module.so/;extensions=module.so/g' /etc/php.d/mcrypt.ini
