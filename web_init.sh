@@ -18,7 +18,7 @@ sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/httpd/co
 sed -i 's/expose_php = On/expose_php = Off/g' /etc/php.ini
 sed -i 's/ServerTokens OS/ServerTokens Prod/g' /etc/httpd/conf/httpd.conf
 sed -i 's/ServerSignature On/ServerSignature Off/g' /etc/httpd/conf/httpd.conf
-sed -i 's/ServerAdmin root@localhost/ServerAdmin auto@usa.gov/g' /etc/httpd/conf/httpd.conf
+sed -i 's/ServerAdmin root@localhost/ServerAdmin security@dangdang.com/g' /etc/httpd/conf/httpd.conf
 sed -i 's/extension=module.so/;extension=module.so/g' /etc/php.d/mcrypt.ini
 sed -i 's/#ServerName www.example.com:80/ServerName '$ipaddr':80/g' /etc/httpd/conf/httpd.conf
 sed -i 's/extensions=module.so/;extensions=module.so/g' /etc/php.d/mcrypt.ini
@@ -27,6 +27,8 @@ sed -i 's/#MaxAuthTries 6/MaxAuthTries 6/' /etc/ssh/sshd_config
 sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
 echo "net.ipv4.tcp_syncookies=1" >> /etc/sysctl.conf
 echo "export HISTTIMEFORMAT=' `whoami` %F %T '" >> /etc/profile
+echo "install ipv6 /bin/true" > /etc/modprobe.d/disable-ipv6.conf
+echo "IPV6INIT=no" >> /etc/sysconfig/network
 
 rm -f /etc/httpd/conf.d/welcome.conf
 /etc/init.d/mysqld start
@@ -39,3 +41,21 @@ chkconfig --level 2345 iptables off
 chkconfig --level 2345 cups off
 
 echo "done!"
+
+ntp=`rpm -qa |grep ntp-4.2 |wc -l`
+if [ $ntp == "0"]; then
+	yum -y install ntp
+else
+	yum -y remove ntp
+	yum -y install ntp
+fi
+rm -rf /etc/localtime
+ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+cat > /etc/sysconfig/clock <<EOF
+ZONE="Asia/Shanghai"
+UTC=false
+ARC=false
+EOF
+chkconfig --level 345 ntpd on
+/etc/init.d/ntpd start
+ntpdate cn.pool.ntp.org > /dev/null 2>&1
