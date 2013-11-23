@@ -29,6 +29,7 @@ echo "net.ipv4.tcp_syncookies=1" >> /etc/sysctl.conf
 echo "export HISTTIMEFORMAT=' `whoami` %F %T '" >> /etc/profile
 echo "install ipv6 /bin/true" > /etc/modprobe.d/disable-ipv6.conf
 echo "IPV6INIT=no" >> /etc/sysconfig/network
+echo 1 > /proc/sys/net/ipv4/ip_forward
 
 rm -f /etc/httpd/conf.d/welcome.conf
 /etc/init.d/mysqld start
