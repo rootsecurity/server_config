@@ -215,6 +215,34 @@ install_mcrypt()
 	cd ../
 }
 
+install_ngx_server()
+{
+	if [ ! -e "nginx-${NGXVN}.tar.gz" ];then
+		wget -c http://nginx.org/download/nginx-${NGXVN}.tar.gz
+	fi
+	
+	if [ -s "nginx-${NGXVN}.tar.gz" ];then
+		echo "nginx-${NGXVN}.tar.gz [Found]"
+	else
+		echo "Error:nginx-${NGXVN}.tar.gz [Not Found]"
+		exit 1
+	fi
+	
+	tar zxvf nginx-${NGXVN}.tar.gz
+	cd nginx-${NGXVN}/
+	./configure --user=nginx \
+	--group=nginx \
+	--prefix=/usr/local/nginx \
+	--with-http_stub_status_module \
+	--with-http_gzip_static_module \
+	--with-http_realip_module \
+	--with-http_ssl_module \
+	--with-http_flv_module \
+	--with-ipv6
+	make && make install
+	cd ../	
+}
+
 install_memcache()
 {
 	if [ ! -e "memcache-${MEVN}.tgz" ];then
@@ -304,6 +332,9 @@ case $1 in
 	pcre)
 		install_pcre
 		;;
+	nginx)
+		install_ngx_server
+		;;
 	pdo_mysql)
 		install_pdo_mysql
 		;;
@@ -311,7 +342,7 @@ case $1 in
 		help_info
 		;;
 	*)
-		echo "Usage: $0 {init|autoconf|libiconv|libmcrypt|mhash|mcrypt|pcre|memcache|pdo_mysql}"
+		echo "Usage: $0 {init|autoconf|libiconv|libmcrypt|mhash|mcrypt|pcre|nginx|memcache|pdo_mysql}"
 		exit 1
 		;;
 esac
