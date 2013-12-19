@@ -57,7 +57,7 @@ SYSCTL
 for i in `cat /etc/passwd | sort | awk -F ":" '{print $1}'`
 do
 case $i in 
-lp |uucp |games |mail
+lp |uucp |games |mail)
 userdel $i
 groupdel $i
 done
