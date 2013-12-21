@@ -40,6 +40,7 @@ MVN="0.9.9.9"
 MCVN="2.6.8"
 MEVN="2.2.6"
 PDVN="1.0.2"
+NGXVN="1.4.4"
 
 install_init()
 {
