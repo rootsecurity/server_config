@@ -54,12 +54,14 @@ net.ipv4.tcp_max_syn_backlog = 8192
 net.ipv4.tcp_max_tw_buckets = 20000
 SYSCTL
 
-for i in `cat /etc/passwd | sort | awk -F ":" '{print $1}'`
+for i in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
 do
-case $i in 
-lp |uucp |games |mail)
+case $i in
+lp |news |uucp |games |mail)
 userdel $i
 groupdel $i
+;;
+esac
 done
 
 rm -f /etc/httpd/conf.d/welcome.conf
