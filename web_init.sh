@@ -4,17 +4,21 @@ export LANG=en_US.UTF-8
 ipaddr=`ifconfig eth0 | grep "inet addr" | awk '{print $2}'|grep -v "127.0.0.1"|tr -d "addr:"|awk '{print $1}'`
 #rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
 
+#------------------安装epel for rhel6------------------#
 if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
 	wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 	rpm -ivh epel-release-6-8.noarch.rpm
 	rm -f epel-release-6-8.noarch.rpm
 fi
+#------------------------------------------------------#
 
+#-----------------安装epel for rhel5-------------------#
 if [ -s /etc/issue ] && grep 'CentOS release 5.*' /etc/issue; then
 	wget http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
 	rpm -ivh epel-release-5-4.noarch.rpm
 	rm -f epel-release-5-4.noarch.rpm
 fi
+#------------------------------------------------------#
 
 yum -y install gcc gcc-c++ make pcre pcre-devel magic pptp-setup python-devel python-setuptools libxml2 libxml2-devel ncurses-devel file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
 for packages in mysql mysql-libs mysql-devel mysql-server httpd httpd-devel php php-common php-cli php-pear php-gd php-mcrypt php-mysql php-devel;
@@ -28,8 +32,8 @@ $pear install Net-SMTP
 $pear install Mail
 $pear install 
 
-ln -sf /usr/lib64/mysql  /usr/lib/mysql
-ln -sf /usr/lib64/libhtp.so /usr/lib/libhtp.so
+#ln -sf /usr/lib64/mysql  /usr/lib/mysql
+#ln -sf /usr/lib64/libhtp.so /usr/lib/libhtp.so
 
 sed -i 's/exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/#exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/g' /etc/init/control-alt-delete.conf
 sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/httpd/conf/httpd.conf
