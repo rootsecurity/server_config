@@ -46,14 +46,16 @@ sed -i 's/#MaxAuthTries 6/MaxAuthTries 6/' /etc/ssh/sshd_config
 sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
 echo 'net.ipv4.tcp_syncookies=1' >> /etc/sysctl.conf
 echo 'export HISTTIMEFORMAT=" `whoami` %F %T "' >> /etc/profile
+#----------禁用IPV6-------------#
 echo 'install ipv6 /bin/true' > /etc/modprobe.d/disable-ipv6.conf
 echo 'IPV6INIT=no' >> /etc/sysconfig/network
+#-------------------------------#
 sed -i 's/#GSSAPIAuthentication no/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 sed -i 's/GSSAPIAuthentication yes/#GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
 
 
 cat >> /etc/sysctl.conf <<SYSCTL
-# nginx set somaxconn wmem rmem
+#----------优化sysctl-----------#
 net.core.somaxconn = 32768
 net.core.wmem_default = 8388608
 net.core.rmem_default = 8388608
@@ -74,6 +76,7 @@ net.ipv4.tcp_max_syn_backlog = 8192
 net.ipv4.tcp_max_tw_buckets = 20000
 SYSCTL
 
+#----------删除不必要的用户---------------#
 for i in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
 do
 case $i in
@@ -83,12 +86,14 @@ groupdel $i
 ;;
 esac
 done
+#-----------------------------------------#
 
 rm -f /etc/httpd/conf.d/welcome.conf
 /etc/init.d/mysqld start
 /etc/init.d/httpd start
 /etc/init.d/sshd restart
 
+#-------------优化系统服务----------------#
 chkconfig --level 2345 httpd on
 chkconfig --level 2345 mysqld on
 chkconfig --level 2345 ip6tables off
@@ -100,6 +105,7 @@ chkconfig --level 2345 rpcidmapd off
 chkconfig --level 2345 rpcsvcgssd off
 sleep 2
 echo "done!"
+#-----------------------------------------#
 
 ntp=`rpm -qa |grep ntp-4.2 |wc -l`
 if [ $ntp == "0" ]; then
