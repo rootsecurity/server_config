@@ -53,9 +53,8 @@ echo 'IPV6INIT=no' >> /etc/sysconfig/network
 sed -i 's/#GSSAPIAuthentication no/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 sed -i 's/GSSAPIAuthentication yes/#GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
 
-
-cat >> /etc/sysctl.conf <<SYSCTL
 #----------优化sysctl-----------#
+cat >> /etc/sysctl.conf <<SYSCTL
 net.core.somaxconn = 32768
 net.core.wmem_default = 8388608
 net.core.rmem_default = 8388608
