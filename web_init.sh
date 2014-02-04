@@ -2,12 +2,31 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export LANG=en_US.UTF-8
 ipaddr=`ifconfig eth0 | grep "inet addr" | awk '{print $2}'|grep -v "127.0.0.1"|tr -d "addr:"|awk '{print $1}'`
-rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
-yum -y install gcc gcc-c++ make pcre pcre-devel magic pptp-setup python-devel python-setuptools libxml2 libxml2-devel ncurses-devel file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
+#rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
 
-for packages in mysql mysql-libs mysql-devel mysql-server httpd httpd-devel php php-common php-cli php-pear php-gd php-mcrypt php-mysql php-devel php-pear-Image-Canvas php-pear-Image-Color php-pear-Image-Graph php-pear-Image-Text php-pear-Mail php-pear-Net-SMTP php-pear-Net-Curl;
+if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
+	wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+	rpm -ivh epel-release-6-8.noarch.rpm
+	rm -f epel-release-6-8.noarch.rpm
+fi
+
+if [ -s /etc/issue ] && grep 'CentOS release 5.*' /etc/issue; then
+	wget http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
+	rpm -ivh epel-release-5-4.noarch.rpm
+	rm -f epel-release-5-4.noarch.rpm
+fi
+
+yum -y install gcc gcc-c++ make pcre pcre-devel magic pptp-setup python-devel python-setuptools libxml2 libxml2-devel ncurses-devel file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
+for packages in mysql mysql-libs mysql-devel mysql-server httpd httpd-devel php php-common php-cli php-pear php-gd php-mcrypt php-mysql php-devel;
 do yum -y install $packages;
 done
+yum -y remove postfix
+yum -y install sysstat sendmail cronie crontabs cronie-anacron
+
+pear=`which pear`
+$pear install Net-SMTP
+$pear install Mail
+$pear install 
 
 ln -sf /usr/lib64/mysql  /usr/lib/mysql
 ln -sf /usr/lib64/libhtp.so /usr/lib/libhtp.so
@@ -17,10 +36,11 @@ sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/httpd/co
 sed -i 's/expose_php = On/expose_php = Off/g' /etc/php.ini
 sed -i 's/ServerTokens OS/ServerTokens Prod/g' /etc/httpd/conf/httpd.conf
 sed -i 's/ServerSignature On/ServerSignature Off/g' /etc/httpd/conf/httpd.conf
-sed -i 's/ServerAdmin root@localhost/ServerAdmin security@usa.gov/g' /etc/httpd/conf/httpd.conf
+sed -i 's/ServerAdmin root@localhost/ServerAdmin info@qd.gov.cn/g' /etc/httpd/conf/httpd.conf
 sed -i 's/extension=module.so/;extension=module.so/g' /etc/php.d/mcrypt.ini
 sed -i 's/#ServerName www.example.com:80/ServerName '$ipaddr':80/g' /etc/httpd/conf/httpd.conf
 sed -i 's/extensions=module.so/;extensions=module.so/g' /etc/php.d/mcrypt.ini
+
 sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
 sed -i 's/#MaxAuthTries 6/MaxAuthTries 6/' /etc/ssh/sshd_config
 sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
@@ -83,18 +103,18 @@ echo "done!"
 
 ntp=`rpm -qa |grep ntp-4.2 |wc -l`
 if [ $ntp == "0" ]; then
-	yum -y install ntp
+        yum -y install ntp
 else
-	yum -y remove ntp
-	yum -y install ntp
+        yum -y remove ntp
+        yum -y install ntp
 fi
 rm -rf /etc/localtime
 ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-cat > /etc/sysconfig/clock <<EOF
+cat > /etc/sysconfig/clock <<DATE
 ZONE="Asia/Shanghai"
 UTC=false
 ARC=false
-EOF
+DATE
 chkconfig --level 345 ntpd on
 /etc/init.d/ntpd start
 ntpdate cn.pool.ntp.org > /dev/null 2>&1
