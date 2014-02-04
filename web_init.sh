@@ -41,6 +41,10 @@ sed -i 's/extension=module.so/;extension=module.so/g' /etc/php.d/mcrypt.ini
 sed -i 's/#ServerName www.example.com:80/ServerName '$ipaddr':80/g' /etc/httpd/conf/httpd.conf
 sed -i 's/extensions=module.so/;extensions=module.so/g' /etc/php.d/mcrypt.ini
 
+sed -i 's/net.bridge.bridge-nf-call-ip6tables = 0/#net.bridge.bridge-nf-call-ip6tables = 0/g' /etc/sysctl.conf
+sed -i 's/net.bridge.bridge-nf-call-iptables = 0/#net.bridge.bridge-nf-call-iptables = 0/g' /etc/sysctl.conf
+sed -i 's/net.bridge.bridge-nf-call-arptables = 0/#net.bridge.bridge-nf-call-arptables = 0/g' /etc/sysctl.conf
+
 sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
 sed -i 's/#MaxAuthTries 6/MaxAuthTries 6/' /etc/ssh/sshd_config
 sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
