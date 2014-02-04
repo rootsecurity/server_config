@@ -28,9 +28,8 @@ yum -y remove postfix
 yum -y install sysstat sendmail cronie crontabs cronie-anacron
 
 pear=`which pear`
-$pear install Net-SMTP
+$pear install Net_SMTP
 $pear install Mail
-$pear install 
 
 #ln -sf /usr/lib64/mysql  /usr/lib/mysql
 #ln -sf /usr/lib64/libhtp.so /usr/lib/libhtp.so
