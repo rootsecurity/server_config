@@ -35,10 +35,6 @@ $pear install Net_SMTP
 $pear install Mail
 
 
-#ln -sf /usr/lib64/mysql  /usr/lib/mysql
-#ln -sf /usr/lib64/libhtp.so /usr/lib/libhtp.so
-
-
 sed -i 's/exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/#exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/g' /etc/init/control-alt-delete.conf
 sed -i 's/net.bridge.bridge-nf-call-ip6tables = 0/#net.bridge.bridge-nf-call-ip6tables = 0/g' /etc/sysctl.conf
 sed -i 's/net.bridge.bridge-nf-call-iptables = 0/#net.bridge.bridge-nf-call-iptables = 0/g' /etc/sysctl.conf
