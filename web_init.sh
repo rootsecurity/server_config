@@ -34,6 +34,22 @@ $pear install Mail
 #ln -sf /usr/lib64/mysql  /usr/lib/mysql
 #ln -sf /usr/lib64/libhtp.so /usr/lib/libhtp.so
 
+
+#-------------------PS1--------------------------------#
+[ -z "`cat ~/.bashrc | grep ^PS1`" ] && echo 'PS1="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[35;40m\]\W\[\e[0m\]]
+\\$ \[\e[33;40m\]"' >> ~/.bashrc
+#------------------------------------------------------#
+
+#----------if login 5time+ wrong locked 180s-----------#
+[ -z "`cat /etc/pam.d/system-auth | grep 'pam_tally2.so'`" ] && sed -i '4a auth        required      pam_tally2.so deny=5 
+unlock_time=180' /etc/pam.d/system-auth
+#------------------------------------------------------#
+
+#------------------alias vi----------------------------#
+[ -z "`cat ~/.bashrc | grep 'alias vi='`" ] && sed -i "s@alias mv=\(.*\)@alias mv=\1\nalias vi=vim@" ~/.bashrc && echo 'sy
+ntax on' >> /etc/vimrc
+#------------------------------------------------------#
+
 sed -i 's/exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/#exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/g' /etc/init/control-alt-delete.conf
 sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/httpd/conf/httpd.conf
 sed -i 's/expose_php = On/expose_php = Off/g' /etc/php.ini
@@ -53,10 +69,12 @@ sed -i 's/#MaxAuthTries 6/MaxAuthTries 6/' /etc/ssh/sshd_config
 sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
 echo 'net.ipv4.tcp_syncookies=1' >> /etc/sysctl.conf
 echo 'export HISTTIMEFORMAT=" `whoami` %F %T "' >> /etc/profile
+
 #----------禁用IPV6-------------#
 echo 'install ipv6 /bin/true' > /etc/modprobe.d/disable-ipv6.conf
 echo 'IPV6INIT=no' >> /etc/sysconfig/network
 #-------------------------------#
+
 sed -i 's/#GSSAPIAuthentication no/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 sed -i 's/GSSAPIAuthentication yes/#GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
 
@@ -127,6 +145,6 @@ ZONE="Asia/Shanghai"
 UTC=false
 ARC=false
 DATE
-chkconfig --level 345 ntpd on
-/etc/init.d/ntpd start
+#chkconfig --level 345 ntpd on
+#/etc/init.d/ntpd start
 ntpdate cn.pool.ntp.org > /dev/null 2>&1
