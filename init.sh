@@ -30,6 +30,22 @@ yum -y remove mysql-libs
 yum -y install sysstat sendmail cronie crontabs cronie-anacron
 
 
+#-------------------PS1--------------------------------#
+[ -z "`cat ~/.bashrc | grep ^PS1`" ] && echo 'PS1="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[35;40m\]\W\[\e[0m\]]
+\\$ \[\e[33;40m\]"' >> ~/.bashrc
+#------------------------------------------------------#
+
+#----------if login 5time+ wrong locked 180s-----------#
+[ -z "`cat /etc/pam.d/system-auth | grep 'pam_tally2.so'`" ] && sed -i '4a auth        required      pam_tally2.so deny=5 
+unlock_time=180' /etc/pam.d/system-auth
+#------------------------------------------------------#
+
+#------------------alias vi----------------------------#
+[ -z "`cat ~/.bashrc | grep 'alias vi='`" ] && sed -i "s@alias mv=\(.*\)@alias mv=\1\nalias vi=vim@" ~/.bashrc && echo 'sy
+ntax on' >> /etc/vimrc
+#------------------------------------------------------#
+
+
 sed -i 's/exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/#exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/g' /etc/init/control-alt-delete.conf
 sed -i 's/net.bridge.bridge-nf-call-ip6tables = 0/#net.bridge.bridge-nf-call-ip6tables = 0/g' /etc/sysctl.conf
 sed -i 's/net.bridge.bridge-nf-call-iptables = 0/#net.bridge.bridge-nf-call-iptables = 0/g' /etc/sysctl.conf
@@ -118,7 +134,7 @@ ZONE="Asia/Shanghai"
 UTC=false
 ARC=false
 DATE
-chkconfig --level 345 ntpd on
-/etc/init.d/ntpd start
+#chkconfig --level 345 ntpd on
+#/etc/init.d/ntpd start
 ntpdate cn.pool.ntp.org > /dev/null 2>&1
 
