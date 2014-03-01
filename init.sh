@@ -31,8 +31,8 @@ yum -y install sysstat sendmail cronie crontabs cronie-anacron
 
 
 #-------------------PS1--------------------------------#
-[ -z "`cat ~/.bashrc | grep ^PS1`" ] && echo 'PS1="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[35;40m\]\W\[\e[0m\]]
-\\$ \[\e[33;40m\]"' >> ~/.bashrc
+#[ -z "`cat ~/.bashrc | grep ^PS1`" ] && echo 'PS1="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[35;40m\]\W\[\e[0m\]]
+#\\$ \[\e[33;40m\]"' >> ~/.bashrc
 #------------------------------------------------------#
 
 #----------if login 5time+ wrong locked 180s-----------#
