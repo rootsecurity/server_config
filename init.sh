@@ -61,6 +61,12 @@ echo 'export HISTTIMEFORMAT=" `whoami` %F %T "' >> /etc/profile
 echo 'install ipv6 /bin/true' > /etc/modprobe.d/disable-ipv6.conf
 echo 'IPV6INIT=no' >> /etc/sysconfig/network
 #-------------------------------#
+
+#--------去掉wget英国中部时间-----#
+msgunfmt /usr/share/locale/zh_CN/LC_MESSAGES/wget.mo -o - | sed 's/eta(英国中部时间)/ETA/' | msgfmt - -o /tmp/zh_CN.mo
+cp -f /tmp/zh_CN.mo /usr/share/locale/zh_CN/LC_MESSAGES/wget.mo
+#--------------------------------#
+
 sed -i 's/#GSSAPIAuthentication no/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 sed -i 's/GSSAPIAuthentication yes/#GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
 
