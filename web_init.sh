@@ -36,8 +36,11 @@ $pear install Mail
 
 
 #-------------------PS1--------------------------------#
-#[ -z "`cat ~/.bashrc | grep ^PS1`" ] && echo 'PS1="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[35;40m\]\W\[\e[0m\]]
-#\\$ \[\e[33;40m\]"' >> ~/.bashrc
+[ -z "`cat ~/.bashrc | grep ^PS1`" ] && echo 'PPS1="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[35;40m\]\W\[\e[0m\]]\\$ \[\e[33;40m\]"' >> ~/.bashrc
+#------------------------------------------------------#
+
+#------------------alias vi----------------------------#
+[ -z "`cat ~/.bashrc | grep 'alias vi='`" ] && sed -i "s@alias mv=\(.*\)@alias mv=\1\nalias vi=vim@" ~/.bashrc && echo 'syntax on' >> /etc/vimrc
 #------------------------------------------------------#
 
 #----------if login 5time+ wrong locked 180s-----------#
@@ -45,10 +48,7 @@ $pear install Mail
 unlock_time=180' /etc/pam.d/system-auth
 #------------------------------------------------------#
 
-#------------------alias vi----------------------------#
-[ -z "`cat ~/.bashrc | grep 'alias vi='`" ] && sed -i "s@alias mv=\(.*\)@alias mv=\1\nalias vi=vim@" ~/.bashrc && echo 'sy
-ntax on' >> /etc/vimrc
-#------------------------------------------------------#
+export PROMPT_COMMAND='{ msg=$(history 1 | { read x y; echo $y; });user=$(whoami); echo $(date "+%Y-%m-%d %H:%M:%S"):$user:`pwd`/:$msg ---- $(who am i); } >> /tmp/`hostname`.`whoami`.history-timestamp'
 
 sed -i 's/exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/#exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/g' /etc/init/control-alt-delete.conf
 sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/httpd/conf/httpd.conf
