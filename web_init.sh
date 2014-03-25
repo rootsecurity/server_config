@@ -34,6 +34,14 @@ $pear install Mail
 #ln -sf /usr/lib64/mysql  /usr/lib/mysql
 #ln -sf /usr/lib64/libhtp.so /usr/lib/libhtp.so
 
+#---------------vim env-------------------------------#
+echo 'set enc=cp936' > ~/.vimrc
+echo 'set fenc=cp936' >> ~/.vimrc
+echo 'set tabstop=2' >> ~/.vimrc
+echo 'set shiftwidth=2' >> ~/.vimrc
+echo 'set expandtab' >> ~/.vimrc
+echo 'set fencs=cp936,utf-8,ucs-bom,gbk,gb18030,gb2312 ' >> ~/.vimrc
+#------------------------------------------------------#
 
 #-------------------PS1--------------------------------#
 [ -z "`cat ~/.bashrc | grep ^PS1`" ] && echo 'PPS1="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[35;40m\]\W\[\e[0m\]]\\$ \[\e[33;40m\]"' >> ~/.bashrc
@@ -48,7 +56,9 @@ $pear install Mail
 unlock_time=180' /etc/pam.d/system-auth
 #------------------------------------------------------#
 
+#----------cut history log-----------------------------#
 export PROMPT_COMMAND='{ msg=$(history 1 | { read x y; echo $y; });user=$(whoami); echo $(date "+%Y-%m-%d %H:%M:%S"):$user:`pwd`/:$msg ---- $(who am i); } >> /tmp/`hostname`.`whoami`.history-timestamp'
+#------------------------------------------------------#
 
 sed -i 's/exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/#exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/g' /etc/init/control-alt-delete.conf
 sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/httpd/conf/httpd.conf
