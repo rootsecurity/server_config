@@ -10,6 +10,8 @@ if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
 	wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 	rpm -ivh epel-release-6-8.noarch.rpm
 	rm -f epel-release-6-8.noarch.rpm
+	echo 'install ipv6 /bin/true' > /etc/modprobe.d/disable-ipv6.conf
+	echo 'IPV6INIT=no' >> /etc/sysconfig/network
 fi
 #------------------------------------------------------#
 
@@ -19,6 +21,8 @@ if [ -s /etc/issue ] && grep 'CentOS release 5.*' /etc/issue; then
 	wget http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
 	rpm -ivh epel-release-5-4.noarch.rpm
 	rm -f epel-release-5-4.noarch.rpm
+	echo "alias net-pf-10 off" >> /etc/modprobe.conf
+	echo "alias ipv6 off" >> /etc/modprobe.conf
 fi
 #------------------------------------------------------#
 
@@ -66,10 +70,6 @@ sed -i 's/#MaxAuthTries 6/MaxAuthTries 6/' /etc/ssh/sshd_config
 sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
 echo 'net.ipv4.tcp_syncookies=1' >> /etc/sysctl.conf
 echo 'export HISTTIMEFORMAT=" `whoami` %F %T "' >> /etc/profile
-#----------禁用IPV6-------------#
-echo 'install ipv6 /bin/true' > /etc/modprobe.d/disable-ipv6.conf
-echo 'IPV6INIT=no' >> /etc/sysconfig/network
-#-------------------------------#
 
 #--------去掉wget英国中部时间-----#
 msgunfmt /usr/share/locale/zh_CN/LC_MESSAGES/wget.mo -o - | sed 's/eta(英国中部时间)/ETA/' | msgfmt - -o /tmp/zh_CN.mo
@@ -78,7 +78,6 @@ cp -f /tmp/zh_CN.mo /usr/share/locale/zh_CN/LC_MESSAGES/wget.mo
 
 sed -i 's/#GSSAPIAuthentication no/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 sed -i 's/GSSAPIAuthentication yes/#GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
-
 
 #----------优化sysctl-----------#
 cat >> /etc/sysctl.conf <<SYSCTL
