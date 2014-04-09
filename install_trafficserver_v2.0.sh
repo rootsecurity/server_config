@@ -5,7 +5,7 @@
 # Date:2013-09
 # Usage:install_trafficserver_v2.0.sh (init|install|uninstall)
 
-TVER="4.1.2"
+TVER="4.2.0"
 
 function_init() {
 	for ats_packages in tcl tcl-devel pcre pcre-devel flex bison bison-devel expat-devel libcap-devel gcc-c++ lzma make file file-devel;
