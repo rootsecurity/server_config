@@ -9,6 +9,8 @@ if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
 	wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 	rpm -ivh epel-release-6-8.noarch.rpm
 	rm -f epel-release-6-8.noarch.rpm
+	echo 'install ipv6 /bin/true' > /etc/modprobe.d/disable-ipv6.conf
+	echo 'IPV6INIT=no' >> /etc/sysconfig/network
 fi
 #------------------------------------------------------#
 
@@ -20,7 +22,7 @@ if [ -s /etc/issue ] && grep 'CentOS release 5.*' /etc/issue; then
 fi
 #------------------------------------------------------#
 
-yum -y install gcc gcc-c++ make pcre pcre-devel magic pptp-setup python-devel python-setuptools libxml2 libxml2-devel ncurses-devel file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
+yum -y install gcc gcc-c++ make pcre pcre-devel magic pptp-setup python-devel python-setuptools libxml2 libxml2-devel gettext gettext-devel ncurses-devel file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
 for packages in mysql mysql-libs mysql-devel mysql-server httpd httpd-devel php php-common php-cli php-pear php-gd php-mcrypt php-mysql php-devel;
 do yum -y install $packages;
 done
@@ -79,11 +81,6 @@ sed -i 's/#MaxAuthTries 6/MaxAuthTries 6/' /etc/ssh/sshd_config
 sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
 echo 'net.ipv4.tcp_syncookies=1' >> /etc/sysctl.conf
 echo 'export HISTTIMEFORMAT=" `whoami` %F %T "' >> /etc/profile
-
-#----------禁用IPV6-------------#
-echo 'install ipv6 /bin/true' > /etc/modprobe.d/disable-ipv6.conf
-echo 'IPV6INIT=no' >> /etc/sysconfig/network
-#-------------------------------#
 
 #--------去掉wget英国中部时间-----#
 msgunfmt /usr/share/locale/zh_CN/LC_MESSAGES/wget.mo -o - | sed 's/eta(英国中部时间)/ETA/' | msgfmt - -o /tmp/zh_CN.mo
