@@ -8,7 +8,7 @@
 TVER="4.1.2"
 
 function_init() {
-	for ats_packages in tcl tcl-devel pcre pcre-devel expat-devel libcap-devel gcc-c++ lzma make file file-devel;
+	for ats_packages in tcl tcl-devel pcre pcre-devel flex bison bison-devel expat-devel libcap-devel gcc-c++ lzma make file file-devel;
 	do
 	yum -y install $ats_packages;
 	done
@@ -17,7 +17,7 @@ function_init() {
 function_install() {
 	wget -c http://mirror.bit.edu.cn/apache/trafficserver/trafficserver-${TVER}.tar.bz2
 	
-	tar jxvf trafficserver-${TVER}.tar.gz
+	tar jxvf trafficserver-${TVER}.tar.bz2
 	cd trafficserver-${TVER}/
 	./configure --prefix=/usr/local/trafficserver-${TVER} --enable-static \
 	--enable-tproxy=force \
