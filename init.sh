@@ -106,20 +106,14 @@ SYSCTL
 for i in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
 do
 case $i in
-lp |news |uucp |games |mail)
+lp |news |uucp |games |operator)
 userdel $i
 groupdel $i
 ;;
 esac
 done
 #-----------------------------------------#
-
-
-rm -f /etc/httpd/conf.d/welcome.conf
-/etc/init.d/mysqld start
-/etc/init.d/httpd start
 /etc/init.d/sshd restart
-
 
 #-------------优化系统服务----------------#
 chkconfig --level 2345 ip6tables off
@@ -151,4 +145,3 @@ DATE
 #chkconfig --level 345 ntpd on
 #/etc/init.d/ntpd start
 ntpdate cn.pool.ntp.org > /dev/null 2>&1
-
