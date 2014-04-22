@@ -6,7 +6,7 @@ do
         l=`ps aux |grep logstash |grep -v grep`
         if [ "$?" != "0" ] ; then
                 echo "logstash is down..."
-                /usr/bin/nohup /usr/bin/java -jar /data/logstash/logstash-1.3.2-flatjar.jar agent -f /data/logstash/idc3.conf &
+                /etc/init.d/logstash start
         else
                 echo "logstash is running..."
         fi
