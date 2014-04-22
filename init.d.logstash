@@ -25,7 +25,8 @@ case "$1" in
 
   stop)
       echo -n "Shutting down logstash: "
-      killproc  logstash 
+      #killproc  logstash
+      ps aux |grep logstash |grep -v grep |awk '{print $2}' |xargs kill -9
       RETVAL=$?
       echo
       [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/logstash
