@@ -1,7 +1,5 @@
 #!/bin/bash
 #
-#!/bin/bash
-#
 #       pip_install.sh
 #       Author:@rootsecurity
 #       Date:2014-04-17 16:23:33
