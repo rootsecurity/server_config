@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# chkconfig: 2345 70 40
+# description: logstash startup script
+#
+LOGSTASH=/data/logstash/logstash-1.3.2-flatjar.jar
+CONF=/data/logstash/idc3.conf
+TMPDIR=/dev/shm
+export TMPDIR
+
+. /etc/rc.d/init.d/functions
+
+RETVAL=0
+
+case "$1" in
+   start)
+      echo -n "Starting logstash: "
+      [ -f $LOGSTASH ] || exit 1
+      daemon "nohup java -jar $LOGSTASH agent -f $CONF &" 2>> /var/log/messages
+      pgrep -f /data/logstash/logstash-*-flatjar.jar > /var/run/logstash.pid
+      RETVAL=$?
+      echo
+      [ $RETVAL -eq 0 ] && touch /var/lock/subsys/logstash
+      ;;
+
+  stop)
+      echo -n "Shutting down logstash: "
+      killproc  logstash 
+      RETVAL=$?
+      echo
+      [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/logstash
+      ;;
+
+  restart|reload)
+    $0 stop
+    $0 start
+    RETVAL=$?
+    ;;
+  status)
+    status logstash 
+    RETVAL=$?
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|status}"
+    exit 1
+esac
+
+exit $RETVAL
