@@ -6,7 +6,7 @@ ipaddr=`ifconfig eth0 | grep "inet addr" | awk '{print $2}'|grep -v "127.0.0.1"|
 
 #------------------安装epel for rhel6------------------#
 if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
-	wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+	wget http://mirrors.ustc.edu.cn/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
 	rpm -ivh epel-release-6-8.noarch.rpm
 	rm -f epel-release-6-8.noarch.rpm
 	echo 'install ipv6 /bin/true' > /etc/modprobe.d/disable-ipv6.conf
@@ -16,7 +16,7 @@ fi
 
 #-----------------安装epel for rhel5-------------------#
 if [ -s /etc/issue ] && grep 'CentOS release 5.*' /etc/issue; then
-	wget http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm
+	wget http://mirrors.ustc.edu.cn/fedora/epel/5/x86_64/epel-release-5-4.noarch.rpm
 	rpm -ivh epel-release-5-4.noarch.rpm
 	rm -f epel-release-5-4.noarch.rpm
 fi
