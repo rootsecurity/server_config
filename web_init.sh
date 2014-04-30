@@ -122,7 +122,7 @@ SYSCTL
 for i in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
 do
 case $i in
-lp |news |uucp |games |operator)
+lp |news |uucp |sync |games |operator)
 userdel $i
 groupdel $i
 ;;
