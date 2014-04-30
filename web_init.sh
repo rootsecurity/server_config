@@ -27,7 +27,7 @@ fi
 yum -y clean all && yum -y makecache
 #------------------------------------------------------#
 
-yum -y install gcc gcc-c++ make pcre pcre-devel magic pptp-setup python-devel python-setuptools gperftools gperftools-libs libxml2 libxml2-devel gettext gettext-devel ncurses-devel file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
+yum -y install gcc gcc-c++ make pcre pcre-devel magic pptp-setup python-devel python-setuptools gperftools gperftools-libs libxml2 libxml2-devel gettext gettext-devel ncurses-devel file file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
 for packages in mysql mysql-libs mysql-devel mysql-server httpd httpd-devel php php-common php-cli php-pear php-gd php-mcrypt php-mysql php-devel;
 do yum -y install $packages;
 done
