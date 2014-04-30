@@ -2,7 +2,6 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export LANG=en_US.UTF-8
 ipaddr=`ifconfig eth0 | grep "inet addr" | awk '{print $2}'|grep -v "127.0.0.1"|tr -d "addr:"|awk '{print $1}'`
-#rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
 
 #------------------安装epel for rhel6------------------#
 if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
@@ -11,6 +10,7 @@ if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
 	rm -f epel-release-6-8.noarch.rpm
 	echo 'install ipv6 /bin/true' > /etc/modprobe.d/disable-ipv6.conf
 	echo 'IPV6INIT=no' >> /etc/sysconfig/network
+	rpm --import http://mirrors.ustc.edu.cn/fedora/epel/RPM-GPG-KEY-EPEL-6
 fi
 #------------------------------------------------------#
 
@@ -19,7 +19,12 @@ if [ -s /etc/issue ] && grep 'CentOS release 5.*' /etc/issue; then
 	wget http://mirrors.ustc.edu.cn/fedora/epel/5/x86_64/epel-release-5-4.noarch.rpm
 	rpm -ivh epel-release-5-4.noarch.rpm
 	rm -f epel-release-5-4.noarch.rpm
+	rpm --import http://mirrors.ustc.edu.cn/fedora/epel/RPM-GPG-KEY-EPEL-5
 fi
+#------------------------------------------------------#
+
+#------------------update Yum sources------------------#
+yum -y clean all && yum -y makecache
 #------------------------------------------------------#
 
 yum -y install gcc gcc-c++ make pcre pcre-devel magic pptp-setup python-devel python-setuptools gperftools gperftools-libs libxml2 libxml2-devel gettext gettext-devel ncurses-devel file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
@@ -37,12 +42,12 @@ $pear install Mail
 #ln -sf /usr/lib64/libhtp.so /usr/lib/libhtp.so
 
 #---------------vim env-------------------------------#
-echo 'set enc=cp936' > ~/.vimrc
-echo 'set fenc=cp936' >> ~/.vimrc
-echo 'set tabstop=2' >> ~/.vimrc
-echo 'set shiftwidth=2' >> ~/.vimrc
-echo 'set expandtab' >> ~/.vimrc
-echo 'set fencs=cp936,utf-8,ucs-bom,gbk,gb18030,gb2312 ' >> ~/.vimrc
+#echo 'set enc=cp936' > ~/.vimrc
+#echo 'set fenc=cp936' >> ~/.vimrc
+#echo 'set tabstop=2' >> ~/.vimrc
+#echo 'set shiftwidth=2' >> ~/.vimrc
+#echo 'set expandtab' >> ~/.vimrc
+#echo 'set fencs=cp936,utf-8,ucs-bom,gbk,gb18030,gb2312 ' >> ~/.vimrc
 #------------------------------------------------------#
 
 #-------------------PS1--------------------------------#
@@ -110,6 +115,7 @@ net.ipv4.tcp_keepalive_time = 100
 net.ipv4.tcp_syncookies = 1
 net.ipv4.tcp_max_syn_backlog = 8192
 net.ipv4.tcp_max_tw_buckets = 20000
+net.ipv4.ip_default_ttl = 255
 SYSCTL
 
 #----------删除不必要的用户---------------#
