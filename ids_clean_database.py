@@ -15,19 +15,19 @@ class idsession(requests.Session):
     def __init__(self):
         requests.Session.__init__(self)
         self.headers = {
-        'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36',
-        'Content-Type':'application/x-www-form-urlencoded',
-        'Referer':'http://xxx.corp.domain.com/base/base_maintenance.php',
-        'Accept-Encoding':'gzip,deflate,sdch',
-		'Accept-Language':'zh-CN,zh;q=0.8,en;q=0.6',
-		'Cache-Control':'max-age=0',
-		'Origin':'http://xxx.corp.domain.com',
-		'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-		'Host':'xxx.corp.domain.com',
-		'Content-Length':'24',
-		'Cookie':'BASERole=d825fc3fa4633ec76877fce157dbd4c8|admin|; PHPSESSID=aol74duuleofjq1o7sigamo160',
-		'Proxy-Connection':'keep-alive'
-		}
+            'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36',
+            'Content-Type':'application/x-www-form-urlencoded',
+            'Referer':'http://xxx.corp.domain.com/base/base_maintenance.php',
+            'Accept-Encoding':'gzip,deflate,sdch',
+	    'Accept-Language':'zh-CN,zh;q=0.8,en;q=0.6',
+	    'Cache-Control':'max-age=0',
+	    'Origin':'http://xxx.corp.domain.com',
+	    'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+	    'Host':'xxx.corp.domain.com',
+	    'Content-Length':'24',
+	    'Cookie':'BASERole=d825fc3fa4633ec76877fce157dbd4c8|admin|; PHPSESSID=aol74duuleofjq1o7sigamo160',
+	    'Proxy-Connection':'keep-alive'
+	}
 	
 	self.data = {
 	    'submit':'Clear Data Tables',
