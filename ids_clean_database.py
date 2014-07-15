@@ -37,7 +37,7 @@ class idsession(requests.Session):
 	res2 = self.post(self.post_url,self.data,headers=self.headers)
     
 if __name__ == '__main__':
-    os.system("/usr/local/mysql/bin/mysqldump -u ids -pids2014 ids > /data/backup/ids."+str(datetime.datetime.now())[:10]+".sql")
+    os.system("/usr/local/mysql/bin/mysqldump -u ids -pxxxx ids > /data/backup/ids."+str(datetime.datetime.now())[:10]+".sql")
     session=idsession()
     session.main()
     os.system("/etc/init.d/barnyard2 stop && /etc/init.d/suricata stop")
