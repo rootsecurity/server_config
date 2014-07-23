@@ -5,7 +5,7 @@
 ##	$Name: install_ossec_v2.8.sh	 ##
 ##	$Time: 2014/06/19		 ##
 ##	$Version:0.1.8           	 ##
-##      $Author:daiqy                 ##
+##      $Author:daiqy                   ##
 ##					 ##
 ##########################################
 
