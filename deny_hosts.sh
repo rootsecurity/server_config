@@ -10,7 +10,7 @@ do
         NUM=`echo $i | awk -F = '{print $2}'`
         if [ $NUM -gt $DEFINE ]; then
                 grep $IP /etc/hosts.deny > /dev/null
-                if [ $? -gt 0 ]; then
+                if [ $? -ne 0 ]; then
                         echo "sshd:$IP" >> /etc/hosts.deny
                 fi
         fi
