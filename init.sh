@@ -43,6 +43,13 @@ yum -y install sysstat sendmail cronie crontabs cronie-anacron
 #echo 'set fencs=cp936,utf-8,ucs-bom,gbk,gb18030,gb2312 ' >> ~/.vimrc
 #------------------------------------------------------#
 
+#-----------------优化limits.conf----------------------#
+echo '*       soft    nproc   2047'	>> /etc/security/limits.conf
+echo '*       hard    nproc   16384' 	>> /etc/security/limits.conf
+echo '*       soft    nofile  32767'    >> /etc/security/limits.conf
+echo '*       hard    nofile  65536'    >> /etc/security/limits.conf
+#------------------------------------------------------#
+
 #-------------------PS1--------------------------------#
 [ -z "`cat ~/.bashrc | grep ^PS1`" ] && echo 'PPS1="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h \[\e[35;40m\]\W\[\e[0m\]]\\$ \[\e[33;40m\]"' >> ~/.bashrc
 #------------------------------------------------------#
