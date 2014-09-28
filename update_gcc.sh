@@ -2,7 +2,7 @@
 dv=1.1
 devtoolset=`rpm -qa |grep devtoolset |wc -l`
 
-if [ ! -f "/etc/yum.repos.d/devtools-${dv}.repo"]; then
+if [ ! -f "/etc/yum.repos.d/devtools-${dv}.repo" ]; then
 	wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -P /etc/yum.repos.d
 	sh -c 'echo "enabled=1" >> /etc/yum.repos.d/devtools-1.1.repo'
 fi
