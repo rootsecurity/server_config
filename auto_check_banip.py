@@ -33,11 +33,14 @@ t2=datetime.datetime.utcfromtimestamp(t2).strftime("%Y-%m-%d %H:%M:%S")
 #查询条件
 sql="select ip from banip where ban_time between '%s' and '%s'" % (t1,t2)
 a=cursor.execute(sql)
-
+iplist=[]
+for i in cursor.fetchall():
+        iplist.append(i[2])
 #发送邮件
-result = "Today we blocked """ +str(a)+" ip "
+result = "Today we blocked " +str(a)+" ip \n"+'|'.join([i for i in iplist])
+print result
 msg=MIMEText(result)
-msg["From"] = "autosendmail@server.com"
+msg["From"] = "no-reply@server.com"
 msg["To"] = "security@server.com"
 msg["Subject"] = "IP Block Information".decode('utf-8')
 p = Popen(["/usr/sbin/sendmail", "-t"], stdin=PIPE)
