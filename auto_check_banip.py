@@ -37,7 +37,7 @@ iplist=[]
 for i in cursor.fetchall():
         iplist.append(i[2])
 #发送邮件
-result = "Today we blocked " +str(a)+" ip \n"+'|'.join([i for i in iplist])
+result = "Yesterday we blocked " +str(a)+" ip \n"+'|'.join([i for i in iplist])
 print result
 msg=MIMEText(result)
 msg["From"] = "no-reply@server.com"
