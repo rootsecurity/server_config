@@ -4,7 +4,7 @@
 #date:2014-12-23
 
 '''
-simply script to scan firstp2p.com just set sep directory
+simply script to scan website.com just set sep directory
 home its can work.
 '''
 
