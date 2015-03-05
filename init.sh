@@ -35,12 +35,12 @@ yum -y install sysstat sendmail cronie crontabs cronie-anacron
 
 
 #---------------vim env-------------------------------#
-#echo 'set enc=cp936' > ~/.vimrc
-#echo 'set fenc=cp936' >> ~/.vimrc
-#echo 'set tabstop=2' >> ~/.vimrc
-#echo 'set shiftwidth=2' >> ~/.vimrc
-#echo 'set expandtab' >> ~/.vimrc
-#echo 'set fencs=cp936,utf-8,ucs-bom,gbk,gb18030,gb2312 ' >> ~/.vimrc
+# echo 'set enc=cp936' > ~/.vimrc
+# echo 'set fenc=cp936' >> ~/.vimrc
+# echo 'set tabstop=2' >> ~/.vimrc
+# echo 'set shiftwidth=2' >> ~/.vimrc
+# echo 'set expandtab' >> ~/.vimrc
+# echo 'set fencs=cp936,utf-8,ucs-bom,gbk,gb18030,gb2312 ' >> ~/.vimrc
 #------------------------------------------------------#
 
 #-----------------优化limits.conf----------------------#
@@ -59,8 +59,7 @@ echo '*       hard    nofile  65536'    >> /etc/security/limits.conf
 #------------------------------------------------------#
 
 #----------if login 5time+ wrong locked 180s-----------#
-[ -z "`cat /etc/pam.d/system-auth | grep 'pam_tally2.so'`" ] && sed -i '4a auth        required      pam_tally2.so deny=5 
-unlock_time=180' /etc/pam.d/system-auth
+[ -z "`cat /etc/pam.d/system-auth | grep 'pam_tally2.so'`" ] && sed -i '4a auth        required      pam_tally2.so deny=5  unlock_time=180' /etc/pam.d/system-auth
 #------------------------------------------------------#
 
 #-----------cut history log-----------------------------#
@@ -110,7 +109,7 @@ net.ipv4.ip_default_ttl = 255
 SYSCTL
 
 
-#----------删除不必要的用户---------------#
+#----------用户---------------#
 for i in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
 do
 case $i in
@@ -118,6 +117,10 @@ lp |news |sync |uucp |games |operator)
 userdel $i
 groupdel $i
 ;;
+case $p in 
+www |mysql)
+groupadd $i
+useradd -g $i $i
 esac
 done
 #-----------------------------------------#
