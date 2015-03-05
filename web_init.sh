@@ -42,12 +42,12 @@ $pear install Mail
 #ln -sf /usr/lib64/libhtp.so /usr/lib/libhtp.so
 
 #---------------vim env-------------------------------#
-#echo 'set enc=cp936' > ~/.vimrc
-#echo 'set fenc=cp936' >> ~/.vimrc
-#echo 'set tabstop=2' >> ~/.vimrc
-#echo 'set shiftwidth=2' >> ~/.vimrc
-#echo 'set expandtab' >> ~/.vimrc
-#echo 'set fencs=cp936,utf-8,ucs-bom,gbk,gb18030,gb2312 ' >> ~/.vimrc
+# echo 'set enc=cp936' > ~/.vimrc
+# echo 'set fenc=cp936' >> ~/.vimrc
+# echo 'set tabstop=2' >> ~/.vimrc
+# echo 'set shiftwidth=2' >> ~/.vimrc
+# echo 'set expandtab' >> ~/.vimrc
+# echo 'set fencs=cp936,utf-8,ucs-bom,gbk,gb18030,gb2312 ' >> ~/.vimrc
 #------------------------------------------------------#
 
 #-----------------优化limits.conf----------------------#
@@ -66,8 +66,7 @@ echo '*       hard    nofile  65536'    >> /etc/security/limits.conf
 #------------------------------------------------------#
 
 #----------if login 5time+ wrong locked 180s-----------#
-[ -z "`cat /etc/pam.d/system-auth | grep 'pam_tally2.so'`" ] && sed -i '4a auth        required      pam_tally2.so deny=5 
-unlock_time=180' /etc/pam.d/system-auth
+[ -z "`cat /etc/pam.d/system-auth | grep 'pam_tally2.so'`" ] && sed -i '4a auth        required      pam_tally2.so deny=5  unlock_time=180' /etc/pam.d/system-auth
 #------------------------------------------------------#
 
 #----------cut history log-----------------------------#
@@ -79,7 +78,7 @@ sed -i 's/Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/httpd/co
 sed -i 's/expose_php = On/expose_php = Off/g' /etc/php.ini
 sed -i 's/ServerTokens OS/ServerTokens Prod/g' /etc/httpd/conf/httpd.conf
 sed -i 's/ServerSignature On/ServerSignature Off/g' /etc/httpd/conf/httpd.conf
-sed -i 's/ServerAdmin root@localhost/ServerAdmin info@qd.gov.cn/g' /etc/httpd/conf/httpd.conf
+sed -i 's/ServerAdmin root@localhost/ServerAdmin info@gov.cn/g' /etc/httpd/conf/httpd.conf
 sed -i 's/extension=module.so/;extension=module.so/g' /etc/php.d/mcrypt.ini
 sed -i 's/#ServerName www.example.com:80/ServerName '$ipaddr':80/g' /etc/httpd/conf/httpd.conf
 sed -i 's/extensions=module.so/;extensions=module.so/g' /etc/php.d/mcrypt.ini
