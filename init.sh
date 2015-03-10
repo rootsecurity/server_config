@@ -27,7 +27,7 @@ fi
 yum -y clean all && yum -y makecache
 #------------------------------------------------------#
 
-yum -y install gcc gcc-c++ make pcre pcre-devel magic bzip2-devel pptp-setup python-devel python-setuptools libxml2 libxml2-devel gettext gettext-devel ncurses-devel file file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
+yum -y install gcc gcc-c++ kernel kernel* make libedit pcre pcre-devel magic flex libtool* gperftools-libs bzip2-devel iptraf pptp-setup python-devel python-setuptools libxml2 libxml2-devel gettext gettext-devel ncurses-devel file file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
 yum -y remove postfix
 yum -y remove httpd
 yum -y remove mysql-libs
@@ -75,7 +75,7 @@ sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
 sed -i 's/#MaxAuthTries 6/MaxAuthTries 6/' /etc/ssh/sshd_config
 sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
 echo 'net.ipv4.tcp_syncookies=1' >> /etc/sysctl.conf
-echo 'export HISTTIMEFORMAT=" `whoami` %F %T "' >> /etc/profile
+echo 'export HISTTIMEFORMAT="[ `whoami` %F %T "]' >> /etc/profile
 
 #--------去掉wget英国中部时间-----#
 msgunfmt /usr/share/locale/zh_CN/LC_MESSAGES/wget.mo -o - | sed 's/eta(英国中部时间)/ETA/' | msgfmt - -o /tmp/zh_CN.mo
@@ -117,10 +117,15 @@ lp |news |sync |uucp |games |operator)
 userdel $i
 groupdel $i
 ;;
+esac
+done
+
+for i in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
 case $p in 
 www |mysql)
-groupadd $i
-useradd -g $i $i
+groupadd $p
+useradd -g $p $p
+;;
 esac
 done
 #-----------------------------------------#
