@@ -108,7 +108,6 @@ net.ipv4.tcp_max_tw_buckets = 20000
 net.ipv4.ip_default_ttl = 255
 SYSCTL
 
-
 #----------用户---------------#
 for i in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
 do
@@ -120,7 +119,7 @@ groupdel $i
 esac
 done
 
-for i in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
+for p in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
 case $p in 
 www |mysql)
 groupadd $p
@@ -129,6 +128,15 @@ useradd -g $p $p
 esac
 done
 #-----------------------------------------#
+
+#---------初始化文件夹--------#
+ln -s /data /export
+cd /export && mkdir -p {App,Config,Log,MySQLData,MongoData,RedisData,Shell,Server,Service}
+cd /export/Log && mkdir -p {nginx,mysql,debug,php-fpm}
+chown -R mysql.mysql mysql
+chown -R www.www nginx php-fpm
+#-----------------------------#
+
 /etc/init.d/sshd restart
 
 #-------------优化系统服务----------------#
