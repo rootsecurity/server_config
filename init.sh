@@ -33,16 +33,6 @@ yum -y remove httpd
 yum -y remove mysql-libs
 yum -y install sysstat sendmail cronie crontabs cronie-anacron
 
-
-#---------------vim env-------------------------------#
-# echo 'set enc=cp936' > ~/.vimrc
-# echo 'set fenc=cp936' >> ~/.vimrc
-# echo 'set tabstop=2' >> ~/.vimrc
-# echo 'set shiftwidth=2' >> ~/.vimrc
-# echo 'set expandtab' >> ~/.vimrc
-# echo 'set fencs=cp936,utf-8,ucs-bom,gbk,gb18030,gb2312 ' >> ~/.vimrc
-#------------------------------------------------------#
-
 #-----------------优化limits.conf----------------------#
 echo '*       soft    nproc   2047'	>> /etc/security/limits.conf
 echo '*       hard    nproc   16384' 	>> /etc/security/limits.conf
@@ -120,6 +110,7 @@ esac
 done
 
 for p in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
+do
 case $p in 
 www |mysql)
 groupadd $p
@@ -129,13 +120,13 @@ esac
 done
 #-----------------------------------------#
 
-#---------初始化文件夹--------#
+#---------------初始化文件夹--------------#
 ln -s /data /export
 cd /export && mkdir -p {App,Config,Log,MySQLData,MongoData,RedisData,Shell,Server,Service}
 cd /export/Log && mkdir -p {nginx,mysql,debug,php-fpm}
 chown -R mysql.mysql mysql
 chown -R www.www nginx php-fpm
-#-----------------------------#
+#-----------------------------------------#
 
 /etc/init.d/sshd restart
 
