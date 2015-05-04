@@ -23,6 +23,16 @@ if [ -s /etc/issue ] && grep 'CentOS release 5.*' /etc/issue; then
 fi
 #------------------------------------------------------#
 
+#------------------------mongodb-----------------------#
+cat > /etc/yum.repos.d/mongo.repo<<mon
+[mongodb]
+name=MongoDB Repository
+baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/
+gpgcheck=0
+enabled=1
+mon
+#------------------------------------------------------#
+
 #----------------update Yum sources--------------------#
 yum -y clean all && yum -y makecache
 #------------------------------------------------------#
@@ -32,6 +42,8 @@ yum -y remove postfix
 yum -y remove httpd
 yum -y remove mysql-libs
 yum -y install sysstat sendmail cronie crontabs cronie-anacron
+yum -y install mongodb mongodb-server
+yum -y install redis
 
 #-----------------优化limits.conf----------------------#
 echo '*       soft    nproc   2047'	>> /etc/security/limits.conf
@@ -56,6 +68,8 @@ echo '*       hard    nofile  65536'    >> /etc/security/limits.conf
 export PROMPT_COMMAND='{ msg=$(history 1 | { read x y; echo $y; });user=$(whoami); echo $(date "+%Y-%m-%d %H:%M:%S"):$user:`pwd`/:$msg ---- $(who am i); } >> /tmp/`hostname`.`whoami`.history-timestamp'
 #-------------------------------------------------------#
 
+#sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongodb.conf
+#sed -i 's/27017/37107/g' /etc/mongodb.conf
 sed -i 's/exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/#exec \/sbin\/shutdown -r now "Control-Alt-Delete pressed"/g' /etc/init/control-alt-delete.conf
 sed -i 's/net.bridge.bridge-nf-call-ip6tables = 0/#net.bridge.bridge-nf-call-ip6tables = 0/g' /etc/sysctl.conf
 sed -i 's/net.bridge.bridge-nf-call-iptables = 0/#net.bridge.bridge-nf-call-iptables = 0/g' /etc/sysctl.conf
@@ -99,33 +113,38 @@ net.ipv4.ip_default_ttl = 255
 SYSCTL
 
 #----------用户---------------#
-for i in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
-do
-case $i in
-lp |news |sync |uucp |games |operator)
-userdel $i
-groupdel $i
-;;
-esac
-done
+#for i in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
+#do
+#case $i in
+#lp |news |sync |uucp |games |operator)
+#userdel $i
+#groupdel $i
+#;;
+#esac
+#done
 
-for p in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
-do
-case $p in 
-www |mysql)
-groupadd $p
-useradd -g $p $p
-;;
-esac
-done
+#for p in `cat /etc/passwd | sort |awk -F ":" '{print $1}'`
+#do
+#case $p in 
+#www |mysql)
+#groupadd $p
+#useradd -g $p $p
+#;;
+#esac
+#done
 #-----------------------------------------#
 
 #---------------初始化文件夹--------------#
-ln -s /data /export
+#ln -s /data /export
+if [ -d "/data" ]; then
+	/bin/mkdir -p /export
+else
+	/bin/ln -s /data /export
+fi
 cd /export && mkdir -p {App,Config,Log,MySQLData,MongoData,RedisData,Shell,Server,Service}
 cd /export/Log && mkdir -p {nginx,mysql,debug,php-fpm}
-chown -R mysql.mysql mysql
-chown -R www.www nginx php-fpm
+#chown -R mysql.mysql mysql
+#chown -R www.www nginx php-fpm
 #-----------------------------------------#
 
 /etc/init.d/sshd restart
@@ -141,7 +160,6 @@ chkconfig --level 2345 rpcsvcgssd off
 sleep 2
 echo "done!"
 #-----------------------------------------#
-
 
 ntp=`rpm -qa |grep ntp-4.2 |wc -l`
 if [ $ntp == "0" ]; then
