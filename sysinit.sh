@@ -1,6 +1,7 @@
 #!/bin/bash
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export LANG=en_US.UTF-8
+arch=`uname -m`
 ipaddr=`ifconfig eth0 | grep "inet addr" | awk '{print $2}'|grep -v "127.0.0.1"|tr -d "addr:"|awk '{print $1}'`
 
 #------------------安装epel for rhel6------------------#
@@ -27,7 +28,7 @@ fi
 cat > /etc/yum.repos.d/mongo.repo<<mon
 [mongodb]
 name=MongoDB Repository
-baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/
+baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/${arch}/
 gpgcheck=0
 enabled=1
 mon
