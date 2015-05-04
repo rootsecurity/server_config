@@ -137,9 +137,10 @@ SYSCTL
 #---------------初始化文件夹--------------#
 #ln -s /data /export
 if [ -d "/data" ]; then
-	/bin/mkdir -p /export
-else
 	/bin/ln -s /data /export
+else
+	/bin/mkdir -p /export
+	
 fi
 cd /export && mkdir -p {App,Config,Log,MySQLData,MongoData,RedisData,Shell,Server,Service}
 cd /export/Log && mkdir -p {nginx,mysql,debug,php-fpm}
