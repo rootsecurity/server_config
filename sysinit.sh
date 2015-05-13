@@ -25,6 +25,7 @@ fi
 #------------------------------------------------------#
 
 #------------------------mongodb-----------------------#
+if [ ! -f "/etc/yum.repos.d/mongo.repo" ]; then
 cat > /etc/yum.repos.d/mongo.repo<<mon
 [mongodb]
 name=MongoDB Repository
@@ -32,7 +33,31 @@ baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/${arch}/
 gpgcheck=0
 enabled=1
 mon
+fi
+else
+echo "mongo.repo already exists!"
 #------------------------------------------------------#
+
+#------------------------ntop--------------------------#
+if [ ! -f "/etc/yum.repos.d/ntop.repo" ]; then
+cat > /etc/yum.repos.d/ntop.repo <<ntop
+[ntop]
+name=ntop packages
+baseurl=http://www.nmon.net/centos/$releasever/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=http://www.nmon.net/centos/RPM-GPG-KEY-deri
+[ntop-noarch]
+name=ntop packages
+baseurl=http://www.nmon.net/centos/$releasever/noarch/
+enabled=1
+gpgcheck=1
+gpgkey=http://www.nmon.net/centos/RPM-GPG-KEY-deri
+ntop
+fi
+else
+echo "ntop.repo already exists!"
+#-------------------------------------------------------#
 
 #----------------update Yum sources--------------------#
 yum -y clean all && yum -y makecache
