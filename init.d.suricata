@@ -1,0 +1,67 @@
+#!/bin/bash
+# barnyard2 init file for linux
+#
+# chkconfig: - 99 99
+# description: barnyard2 Daemon
+#
+# processname: /usr/local/bin/suricata
+# config: /usr/local/etc/suricata/suricata.yaml
+# pidfile: /var/run/suricata.pid
+
+# source function library
+. /etc/init.d/functions
+
+#export LD_PRELOAD=/usr/lib64/libtcmalloc_minimal.so.4
+CONFDIR=/usr/local/etc/suricata
+RETVAL=0
+prog="suricata"
+OPTIONS="--pfring-int=eth1 --pfring-cluster-id=99 --pfring-cluster-type=cluster_flow -c ${CONFDIR}/suricata.yaml -D >> /tmp/suricata.log"
+PROCESSNAME=/usr/local/bin/suricata
+
+start() {
+        echo -n $"Starting $prog: "
+        if [ $UID -ne 0 ]; then
+                RETVAL=1
+                failure
+        else
+                daemon $PROCESSNAME $OPTIONS
+                RETVAL=$?
+        fi;
+        echo
+        return $RETVAL
+}
+
+stop() {
+        echo -n $"Stopping $prog: "
+        if [ $UID -ne 0 ]; then
+                RETVAL=1
+                failure
+        else
+                killproc $PROCESSNAME
+                RETVAL=$?
+        fi;
+        echo
+        return $RETVAL
+}
+
+restart(){
+        stop
+        start
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  restart)
+        restart
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart}"
+        RETVAL=1
+esac
+
+exit $RETVAL
