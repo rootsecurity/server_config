@@ -74,13 +74,17 @@ fi
 yum -y clean all && yum -y makecache
 #------------------------------------------------------#
 
-yum -y install gcc gcc-c++ kernel kernel* make libedit pcre pcre-devel magic flex libtool* gperftools-libs bzip2-devel iptraf pptp-setup python-devel python-setuptools libxml2 libxml2-devel gettext gettext-devel ncurses-devel file file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
+yum -y install gcc gcc-c++ kernel kernel* make libedit pcre pcre-devel magic flex libtool* \
+gperftools-libs bzip2-devel iptraf pptp-setup python-devel python-setuptools libxml2 libxml2-devel \
+gettext gettext-devel ncurses-devel file file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel \
+freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz \
+libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
 yum -y remove postfix
-yum -y remove httpd
+yum -y remove httpd httpd*
 yum -y remove mysql-libs
 yum -y install sysstat sendmail cronie crontabs cronie-anacron
-yum -y install mongodb mongodb-server
-yum -y install redis
+#yum -y install mongodb mongodb-server
+#yum -y install redis
 
 #-----------------优化limits.conf----------------------#
 echo '*       soft    nproc   2047'	>> /etc/security/limits.conf
