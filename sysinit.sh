@@ -4,6 +4,15 @@ export LANG=en_US.UTF-8
 arch=`uname -m`
 ipaddr=`ifconfig eth0 | grep "inet addr" | awk '{print $2}'|grep -v "127.0.0.1"|tr -d "addr:"|awk '{print $1}'`
 
+#------------------check start-------------------------#
+if [ ! /etc/yum.repos.d/run.lock ]; then
+        echo "***the init script has been first running!***"
+else
+        echo "***the run.lock has been exists,the process will exit***"
+        exit 0
+fi
+#--------------------check end-------------------------#
+
 #------------------安装epel for rhel6------------------#
 if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
 	wget http://mirrors.ustc.edu.cn/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
@@ -12,6 +21,7 @@ if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
 	echo 'install ipv6 /bin/true' > /etc/modprobe.d/disable-ipv6.conf
 	echo 'IPV6INIT=no' >> /etc/sysconfig/network
 	rpm --import http://mirrors.ustc.edu.cn/fedora/epel/RPM-GPG-KEY-EPEL-6
+	echo `date  +"%Y-%m-%d %H:%S:%M"` > /etc/yum.repos.d/run.lock
 fi
 #------------------------------------------------------#
 
@@ -25,38 +35,38 @@ fi
 #------------------------------------------------------#
 
 #------------------------mongodb-----------------------#
-if [ ! -f "/etc/yum.repos.d/mongo.repo" ]; then
-cat > /etc/yum.repos.d/mongo.repo<<mon
-[mongodb]
-name=MongoDB Repository
-baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/${arch}/
-gpgcheck=0
-enabled=1
-mon
-fi
-else
-echo "mongo.repo already exists!"
+#if [ ! -f "/etc/yum.repos.d/mongo.repo" ]; then
+#cat > /etc/yum.repos.d/mongo.repo<<mon
+#[mongodb]
+#name=MongoDB Repository
+#baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/${arch}/
+#gpgcheck=0
+#enabled=1
+#mon
+#fi
+#else
+#echo "mongo.repo already exists!"
 #------------------------------------------------------#
 
 #------------------------ntop--------------------------#
-if [ ! -f "/etc/yum.repos.d/ntop.repo" ]; then
-cat > /etc/yum.repos.d/ntop.repo <<ntop
-[ntop]
-name=ntop packages
-baseurl=http://www.nmon.net/centos/$releasever/$basearch/
-enabled=1
-gpgcheck=1
-gpgkey=http://www.nmon.net/centos/RPM-GPG-KEY-deri
-[ntop-noarch]
-name=ntop packages
-baseurl=http://www.nmon.net/centos/$releasever/noarch/
-enabled=1
-gpgcheck=1
-gpgkey=http://www.nmon.net/centos/RPM-GPG-KEY-deri
-ntop
-fi
-else
-echo "ntop.repo already exists!"
+#if [ ! -f "/etc/yum.repos.d/ntop.repo" ]; then
+#cat > /etc/yum.repos.d/ntop.repo <<ntop
+#[ntop]
+#name=ntop packages
+#baseurl=http://www.nmon.net/centos/$releasever/$basearch/
+#enabled=1
+#gpgcheck=1
+#gpgkey=http://www.nmon.net/centos/RPM-GPG-KEY-deri
+#[ntop-noarch]
+#name=ntop packages
+#baseurl=http://www.nmon.net/centos/$releasever/noarch/
+#enabled=1
+#gpgcheck=1
+#gpgkey=http://www.nmon.net/centos/RPM-GPG-KEY-deri
+#ntop
+#fi
+#else
+#echo "ntop.repo already exists!"
 #-------------------------------------------------------#
 
 #----------------update Yum sources--------------------#
@@ -105,7 +115,7 @@ sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
 sed -i 's/#MaxAuthTries 6/MaxAuthTries 6/' /etc/ssh/sshd_config
 sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
 echo 'net.ipv4.tcp_syncookies=1' >> /etc/sysctl.conf
-echo 'export HISTTIMEFORMAT="[ `whoami` %F %T "]' >> /etc/profile
+#echo 'export HISTTIMEFORMAT="[ `whoami` %F %T "]' >> /etc/profile
 
 #--------去掉wget英国中部时间-----#
 msgunfmt /usr/share/locale/zh_CN/LC_MESSAGES/wget.mo -o - | sed 's/eta(英国中部时间)/ETA/' | msgfmt - -o /tmp/zh_CN.mo
@@ -162,14 +172,15 @@ SYSCTL
 
 #---------------初始化文件夹--------------#
 #ln -s /data /export
-if [ -d "/data" ]; then
-	/bin/ln -s /data /export
-else
-	/bin/mkdir -p /export
-	
-fi
-cd /export && mkdir -p {App,Config,Log,MySQLData,MongoData,RedisData,Shell,Server,Service}
-cd /export/Log && mkdir -p {nginx,mysql,debug,php-fpm}
+#if [ -d "/data" ]; then
+#	/bin/ln -s /data /export
+#else
+#	/bin/mkdir -p /export
+#	
+#fi
+
+#cd /export && mkdir -p {App,Config,Log,MySQLData,MongoData,RedisData,Shell,Server,Service}
+#cd /export/Log && mkdir -p {nginx,mysql,debug,php-fpm}
 #chown -R mysql.mysql mysql
 #chown -R www.www nginx php-fpm
 #-----------------------------------------#
