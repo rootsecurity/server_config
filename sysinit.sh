@@ -31,6 +31,7 @@ if [ -s /etc/issue ] && grep 'CentOS release 5.*' /etc/issue; then
 	rpm -ivh epel-release-5-4.noarch.rpm
 	rm -f epel-release-5-4.noarch.rpm
 	rpm --import http://mirrors.ustc.edu.cn/fedora/epel/RPM-GPG-KEY-EPEL-5
+	echo `date  +"%Y-%m-%d %H:%S:%M"` > /etc/yum.repos.d/run.lock
 fi
 #------------------------------------------------------#
 
