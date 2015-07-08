@@ -1,0 +1,70 @@
+#!/bin/bash
+# barnyard2 init file for linux
+#
+# chkconfig: - 99 99
+# description: :barnyard2 Daemon
+#
+# processname: /usr/local/bin/barnyard2
+# config:  /usr/local/etc/barnyard2.conf
+# config:  /usr/local/etc/barnyard2.conf
+# pidfile: /var/run/barnyard2.pid
+
+# source function library
+. /etc/init.d/functions
+
+LOGDIR=/var/log/suricata
+CONF=/usr/local/etc/barnyard2.conf
+LOGNAME=unified2.alert
+ANAME=suricata.waldo
+RETVAL=0
+prog="barnyard2"
+OPTIONS="-c ${CONF} -d ${LOGDIR} -f ${LOGNAME} -w ${LOGDIR}/${ANAME} -D"
+PROCESSNAME=/usr/local/bin/barnyard2
+
+start() {
+        echo -n $"Starting $prog: "
+        if [ $UID -ne 0 ]; then
+                RETVAL=1
+                failure
+        else
+                daemon $PROCESSNAME $OPTIONS
+                RETVAL=$?
+        fi;
+        echo
+        return $RETVAL
+}
+
+stop() {
+        echo -n $"Stopping $prog: "
+        if [ $UID -ne 0 ]; then
+                RETVAL=1
+                failure
+        else
+                killproc $PROCESSNAME
+                RETVAL=$?
+        fi;
+        echo
+        return $RETVAL
+}
+
+restart(){
+        stop
+        start
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  restart)
+        restart
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart}"
+        RETVAL=1
+esac
+
+exit $RETVAL
