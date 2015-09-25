@@ -5,6 +5,7 @@
 SHIYONGLV=`df | grep var | grep -v wd/ | grep -c -E \([7-9][0-9]\%\)\|\(100\%\)`
 
 if [ $SHIYONGLV -gt 0 ]; then
+	#清理hadoop 磁盘空间
 	/bin/rm -rf /var/wd/hadoop/tmp/dfs/data/current/subdir*
 	/bin/rm -rf /var/wd/hadoop/tmp/dfs/data/current/blk*
 	echo -e "\033[1;32;40m `date '+%Y-%m-%d %H:%M:%S\033[0m'`\033[0m" "\033[1;32;40m硬盘空间清理完毕\033[0m"
