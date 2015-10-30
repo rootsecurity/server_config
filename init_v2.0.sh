@@ -173,6 +173,9 @@ case $1 in
 	add_dir)
 		base_add_dir
 		;;
+	limits)
+		base_set_limits
+		;;
 	services)
 		base_set_services
 		;;
