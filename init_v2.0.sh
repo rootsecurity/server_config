@@ -71,6 +71,7 @@ base_set_ssh() {
 	sed -i 's/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/' /etc/ssh/sshd_config
 	sed -i 's/#PermitRootLogin yes/PermitRootLogin no /' /etc/ssh/sshd_config
 	sed -i 's/#UseDNS yes/UseDNS no/' /etc/ssh/sshd_config
+	sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
 	sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 	sed -i 's/#GSSAPIAuthentication no/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 	sed -i 's/GSSAPIAuthentication yes/#GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
