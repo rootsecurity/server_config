@@ -80,6 +80,14 @@ base_set_ssh() {
 	sleep 2 && /etc/init.d/sshd restart
 }
 
+base_set_limits() {
+echo '*       soft    nproc   2047'	>> /etc/security/limits.conf
+echo '*       hard    nproc   16384' 	>> /etc/security/limits.conf
+echo '*       soft    nofile  32767'    >> /etc/security/limits.conf
+echo '*       hard    nofile  65536'    >> /etc/security/limits.conf
+sleep 2 && echo -e '\033[33m |---------- limits.conf设置完毕!!! ----------|\033[0m'
+}
+
 base_set_sysctl() {
 sed -i 's/net.bridge.bridge-nf-call-ip6tables = 0/#net.bridge.bridge-nf-call-ip6tables = 0/g' /etc/sysctl.conf
 sed -i 's/net.bridge.bridge-nf-call-iptables = 0/#net.bridge.bridge-nf-call-iptables = 0/g' /etc/sysctl.conf
