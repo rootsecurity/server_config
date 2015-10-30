@@ -63,7 +63,7 @@ base_add_mysql_user() {
 base_add_www_user() {
 	groupadd -g 601 www
 	useradd -u 601 -g www www
-	echo "8mB482n@)4k1n3u81m7" | passwd --stdin root
+	echo "8mB482n@)4k1n3u81m7" | passwd --stdin www
 	sleep 2 && echo -e '\033[33m |---------- 用户更新完毕!!! ----------|\033[0m'
 }
 
