@@ -42,7 +42,7 @@ base_init_yum() {
 		else
 			echo -e '\033[33m |---------- yum初始化已完成，无需再次初始化!!! ----------|\033[0m'
 			exit 0
-		fi
+	fi
 }
 
 base_add_user() {
