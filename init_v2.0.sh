@@ -3,6 +3,7 @@
 
 ##----------------------------##
 # @Time:2015-10-30 11:30:06    #
+# @Debug:2015-11-06 09:08:32   #
 # @rootsecurity                #
 # @Ver:2.0                     #
 ##----------------------------##
@@ -31,7 +32,7 @@ base_init_repo() {
 base_init_yum() {
 	if [ ! -f "/tmp/init.lock" ]; then 
 		echo -e '\033[33m |---------- 系统即将 yum 安装依赖包，请稍候!!! ----------|\033[0m' && sleep 2 && touch /tmp/init.lock
-		for packages in gcc gcc-c++ make libedit pcre pcre-devel magic flex libevent libevent-devel bison libtool* gperftools-libs bzip2-devel iptraf pptp-setup python-devel python-setuptools libxml2 libxml2-devel gettext gettext-devel ncurses-devel file file-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz gd gd-devel libcurl libcurl-devel freetype freetype-devel tcl tcl-devel perl-Time-HiRes
+		for packages in gcc gcc-c++ make libedit pcre pcre-devel magic flex libevent libevent-devel bison libtool* gperftools-libs bzip2-devel iptraf pptp-setup python-devel python-setuptools libxml2 libxml2-devel gettext gettext-devel ncurses-devel file file-devel sqlite sqlite-devel gperftools gperftools-devel jemalloc libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz libcurl libcurl-devel tcl tcl-devel perl-Time-HiRes
 		do
 			yum -y install $packages
 		done
