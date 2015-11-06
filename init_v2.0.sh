@@ -8,6 +8,9 @@
 # @Ver:2.0                     #
 ##----------------------------##
 
+#判断用户是否为ROOT权限
+[ $(id -u) != "0" ] && { echo "Error: You must be root to run this script!"; exit 1; } 
+
 base_init_repo() {
 	if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
 		rm -rf /etc/yum.repos.d/*
@@ -80,6 +83,15 @@ base_set_ssh() {
 	sed -i -e  '/^root/a \rootsecurity	ALL=(ALL)       NOPASSWD:ALL' /etc/sudoers
 	echo -e '\033[33m |---------- SSH服务设置完毕!!! ----------|\033[0m'
 	sleep 2 && /etc/init.d/sshd restart
+}
+
+base_set_other() {
+	#登陆密码超过5次错误，锁定180秒
+	[ -z "`cat /etc/pam.d/system-auth | grep 'pam_tally2.so'`" ] && sed -i '4a auth        required      pam_tally2.so deny=5 unlock_time=180' /etc/pam.d/system-auth
+	#默认VIM开启高亮模式
+	[ -z "`cat ~/.bashrc | grep 'alias vi='`" ] && sed -i "s@alias mv=\(.*\)@alias mv=\1\nalias vi=vim@" ~/.bashrc && echo 'syntax on' >> /etc/vimrc
+	#优化系统选项
+	[ -z "`grep 'ulimit -SH 65535' /etc/rc.local`" ] && echo "ulimit -SH 65535" >> /etc/rc.local
 }
 
 base_set_limits() {
@@ -177,6 +189,9 @@ case $1 in
 		;;
 	limits)
 		base_set_limits
+		;;
+	other)
+		base_set_other
 		;;
 	services)
 		base_set_services
