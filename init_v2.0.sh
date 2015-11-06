@@ -37,7 +37,7 @@ base_init_yum() {
 			yum -y install $packages
 		done
 		echo -e '\033[33m |---------- 系统即将yum 卸载依赖包，请稍候!!! ----------|\033[0m' && sleep 2
-		yum -y remove postfix mysql-libs
+		yum -y remove postfix mysql-libs httpd httpd-tools httpd-devel php php-devel
 		echo -e '\033[33m |---------- 系统即将 yum 安装依赖包，请稍候!!! ----------|\033[0m' && sleep 2
 		yum -y install sysstat cronie crontabs cronie-anacron
 		else
