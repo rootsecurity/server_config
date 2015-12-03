@@ -72,14 +72,14 @@ base_add_www_user() {
 
 base_set_ssh() {
 	sed -i 's/#ListenAddress 0.0.0.0/ListenAddress 0.0.0.0/' /etc/ssh/sshd_config
-	sed -i 's/#PermitRootLogin yes/PermitRootLogin no /' /etc/ssh/sshd_config
+	sed -i 's/#PermitRootLogin yes/#PermitRootLogin no /' /etc/ssh/sshd_config
 	sed -i 's/#UseDNS yes/UseDNS no/' /etc/ssh/sshd_config
 	sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
-	sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-	sed -i 's/#GSSAPIAuthentication no/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
+	#sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+	#sed -i 's/#GSSAPIAuthentication no/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 	sed -i 's/GSSAPIAuthentication yes/#GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
 	sed -i 's/Defaults    requiretty/#Defaults    requiretty/' /etc/sudoers
-	sed -i -e  '/^root/a \rootsecurity	ALL=(ALL)       NOPASSWD:ALL' /etc/sudoers
+	#sed -i -e  '/^root/a \rootsecurity	ALL=(ALL)       NOPASSWD:ALL' /etc/sudoers
 	echo -e '\033[33m |---------- SSH服务设置完毕!!! ----------|\033[0m'
 	sleep 2 && /etc/init.d/sshd restart
 }
