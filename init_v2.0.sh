@@ -144,8 +144,8 @@ base_add_dir() {
 }
 
 base_set_services() {
-for service_off in iptables ip6tables; do chkconfig --level 2345 $service_off off;done
-for service_on in sshd network sysstat; do chkconfig --level 2345 $service_on on;done
+for service_off in cups abrt-cpp abrtd acpid auditd blk-availability kdump iptables ip6tables; do chkconfig --level 2345 $service_off off;done
+for service_on in atd crond sshd portreserve netfs messagebus mdmonitor network rsyslog sysstat udev-post; do chkconfig --level 2345 $service_on on;done
 sleep 2 && echo -e '\033[33m |---------- 系统服务设置完毕!!! ----------|\033[0m'
 }
 
