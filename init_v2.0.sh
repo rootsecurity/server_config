@@ -52,21 +52,21 @@ base_add_user() {
 	groupadd -g 555 rootsecurity
 	useradd -u 555 -g rootsecurity rootsecurity
 	echo "91Tm3ALai138))rksj4" | passwd --stdin root
-	echo "B91o1,7an371n43oL18" | passwd --stdin rootsecurity
+	echo "B910l,7an371n43oL18" | passwd --stdin rootsecurity
 	sleep 2 && echo -e '\033[33m |---------- 用户更新完毕!!! ----------|\033[0m'
 }
 
 base_add_mysql_user() {
 	groupadd -g 600 mysql
 	useradd -u 600 -g mysql mysql
-	echo "18bhsLU&!B&NQ*NBJ!1" | passwd --stdin mysql
+	#echo "18bhsLU&!B&NQ*NBJ!1" | passwd --stdin mysql
 	sleep 2 && echo -e '\033[33m |---------- 用户更新完毕!!! ----------|\033[0m'
 } 
 
 base_add_www_user() {
 	groupadd -g 601 www
 	useradd -u 601 -g www www
-	echo "8mB482n@)4k1n3u81m7" | passwd --stdin www
+	#echo "8mB482n@)4k1n3u81m7" | passwd --stdin www
 	sleep 2 && echo -e '\033[33m |---------- 用户更新完毕!!! ----------|\033[0m'
 }
 
