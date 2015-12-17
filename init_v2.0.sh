@@ -17,6 +17,8 @@ base_init_repo() {
 		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2 -O CentOS-Base.repo
 		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=0 -O epel.repo
 		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=1 -O epel-testing.repo
+		wget -q https://mirrors.ustc.edu.cn/epel/RPM-GPG-KEY-EPEL-6 -O RPM-GPG-KEY-EPEL-6
+		mv -f RPM-GPG-KEY-EPEL-6 /etc/pki/rpm-gpg/
 		mv *.repo /etc/yum.repos.d/
 		yum clean all && yum makecache
 		echo -e '\033[33m |---------- yum repo源即将设置完毕，请稍候!!! ----------|\033[0m' && sleep 2
@@ -26,6 +28,8 @@ base_init_repo() {
 		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=1 -O CentOS-Base.repo
 		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=0 -O epel.repo
 		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=1 -O epel-testing.repo
+		wget -q https://mirrors.ustc.edu.cn/epel/RPM-GPG-KEY-EPEL-5 -O RPM-GPG-KEY-EPEL-5
+		mv -f RPM-GPG-KEY-EPEL-5 /etc/pki/rpm-gpg/
 		mv *.repo /etc/yum.repos.d/
 		yum clean all && yum makecache
 		echo -e '\033[33m |---------- yum repo源即将设置完毕，请稍候!!! ----------|\033[0m' && sleep 2
