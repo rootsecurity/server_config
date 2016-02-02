@@ -1,9 +1,9 @@
-LNMP && LAMP [自用工具]
+#[自用工具]
 
-a script to install apache nginx,php,mysql and so on...
+  * a script to install apache nginx,php,mysql and so on...
 
 
-auto_scan_website.py          调用AWVS扫描器扫描某个网站
+  * auto_scan_website.py          调用AWVS扫描器扫描某个网站
 
 del_elasticsearchlog.sh       删除ES集群日志
 
