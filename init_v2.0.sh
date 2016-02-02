@@ -83,7 +83,7 @@ base_set_ssh() {
 	#sed -i 's/#GSSAPIAuthentication no/GSSAPIAuthentication no/g' /etc/ssh/sshd_config
 	sed -i 's/GSSAPIAuthentication yes/#GSSAPIAuthentication yes/g' /etc/ssh/sshd_config
 	sed -i 's/Defaults    requiretty/#Defaults    requiretty/' /etc/sudoers
-	#sed -i -e  '/^root/a \rootsecurity	ALL=(ALL)       NOPASSWD:ALL' /etc/sudoers
+	sed -i -e  '/^root/a \rootsecurity	ALL=(ALL)       NOPASSWD:ALL' /etc/sudoers
 	echo -e '\033[33m |---------- SSH服务设置完毕!!! ----------|\033[0m'
 	sleep 2 && /etc/init.d/sshd restart
 }
