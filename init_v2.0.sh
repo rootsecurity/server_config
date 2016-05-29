@@ -3,7 +3,7 @@
 
 ##----------------------------##
 # @Time:2015-10-30 11:30:06    #
-# @Debug:2016-03-03 18:42:59   #
+# @Debug:2016-05-29 19:26:38   #
 # @rootsecurity                #
 # @Ver:2.31                    #
 ##----------------------------##
@@ -14,10 +14,10 @@
 base_init_repo() {
 	if [ -s /etc/issue ] && grep 'CentOS release 6.*' /etc/issue; then
 		rm -rf /etc/yum.repos.d/*
-		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2 -O CentOS-Base.repo
-		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=0 -O epel.repo
-		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=1 -O epel-testing.repo
-		wget -q https://mirrors.ustc.edu.cn/epel/RPM-GPG-KEY-EPEL-6 -O RPM-GPG-KEY-EPEL-6
+		wget -q --no-check-certificate https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=2 -O CentOS-Base.repo
+		wget -q --no-check-certificate https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=0 -O epel.repo
+		wget -q --no-check-certificate https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=1 -O epel-testing.repo
+		wget -q --no-check-certificate https://mirrors.ustc.edu.cn/epel/RPM-GPG-KEY-EPEL-6 -O RPM-GPG-KEY-EPEL-6
 		mv -f RPM-GPG-KEY-EPEL-6 /etc/pki/rpm-gpg/
 		mv *.repo /etc/yum.repos.d/
 		yum clean all && yum makecache
@@ -25,10 +25,10 @@ base_init_repo() {
 	fi
 	if [ -s /etc/issue ] && grep 'CentOS release 5.*' /etc/issue; then
 		rm -rf /etc/yum.repos.d/*
-		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=1 -O CentOS-Base.repo
-		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=0 -O epel.repo
-		wget -q https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=1 -O epel-testing.repo
-		wget -q https://mirrors.ustc.edu.cn/epel/RPM-GPG-KEY-EPEL-5 -O RPM-GPG-KEY-EPEL-5
+		wget -q --no-check-certificate https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/centos?codeblock=1 -O CentOS-Base.repo
+		wget -q --no-check-certificate https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=0 -O epel.repo
+		wget -q --no-check-certificate https://lug.ustc.edu.cn/wiki/_export/code/mirrors/help/epel?codeblock=1 -O epel-testing.repo
+		wget -q --no-check-certificate https://mirrors.ustc.edu.cn/epel/RPM-GPG-KEY-EPEL-5 -O RPM-GPG-KEY-EPEL-5
 		mv -f RPM-GPG-KEY-EPEL-5 /etc/pki/rpm-gpg/
 		mv *.repo /etc/yum.repos.d/
 		yum clean all && yum makecache
@@ -37,16 +37,16 @@ base_init_repo() {
 }
 
 base_init_yum() {
-	if [ ! -f "/tmp/init.lock" ]; then 
-		echo -e '\033[33m |---------- 系统即将 yum 安装依赖包，请稍候!!! ----------|\033[0m' && sleep 2 && touch /tmp/init.lock
-		for packages in gcc gcc-c++ make libedit libxslt* libicu libicu-devel pcre pcre-devel libxslt libxslt-devel magic flex libevent zlib libevent-devel bison libtool* gperftools-libs bzip2-devel iptraf pptp-setup python-devel python-setuptools libxml2 libxml2-devel gettext gettext-devel ncurses-devel file file-devel sqlite sqlite-devel gperftools gperftools-devel jemalloc libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz libcurl libcurl-devel tcl tcl-devel perl-Time-HiRes
+	if [ ! -f "/tmp/sys_init.lock" ]; then 
+		echo -e '\033[33m |---------- 系统即将 yum 安装依赖包，请稍候!!! ----------|\033[0m' && sleep 2 && touch /tmp/sys_init.lock
+		for packages in gcc gcc-c++ make libedit libxslt* libicu libicu-devel pcre pcre-devel libxslt libxslt-devel magic flex libevent zlib libevent-devel bison libtool* gperftools-libs bzip2-devel iptraf pptp-setup python-devel python-setuptools libxml2 libxml2-devel gettext gettext-devel ncurses-devel file file-devel sqlite sqlite-devel gperftools gperftools-devel jemalloc readline readline-devel libyaml libyaml-devel libhtp libhtp-devel gd gd-devel freetype freetype-devel openssl openssl-devel libcurl libcurl-devel libpcap libpcap-devel lrzsz libcurl libcurl-devel tcl tcl-devel perl-Time-HiRes
 		do
 			yum -y install $packages
 		done
 		echo -e '\033[33m |---------- 系统即将yum 卸载依赖包，请稍候!!! ----------|\033[0m' && sleep 2
 		yum -y remove postfix mysql-libs httpd httpd-tools httpd-devel php php-devel
 		echo -e '\033[33m |---------- 系统即将 yum 安装依赖包，请稍候!!! ----------|\033[0m' && sleep 2
-		yum -y install sysstat cronie crontabs cronie-anacron
+		yum -y install sysstat cronie crontabs cronie-anacron;chkconfig --level 35 exim off
 		else
 			echo -e '\033[33m |---------- yum初始化已完成，无需再次初始化!!! ----------|\033[0m'
 	fi
@@ -55,8 +55,8 @@ base_init_yum() {
 base_add_user() {
 	groupadd -g 555 rootsecurity
 	useradd -u 555 -g rootsecurity rootsecurity
-	echo "91Tm3ALai138))rksj4" | passwd --stdin root
-	echo "B910l,7an371n43oL18" | passwd --stdin rootsecurity
+	echo "I-KTBz%d(-E)*nEo" | passwd --stdin root
+	echo "q5V8n5j4Q.O8*qxl" | passwd --stdin rootsecurity
 	sleep 2 && echo -e '\033[33m |---------- 用户更新完毕!!! ----------|\033[0m'
 }
 
@@ -70,7 +70,7 @@ base_add_mysql_user() {
 base_add_www_user() {
 	groupadd -g 601 www
 	useradd -u 601 -g www www
-	#echo "8mB482n@)4k1n3u81m7" | passwd --stdin www
+	#echo "yVv*HA!^HWu+cNm~" | passwd --stdin www
 	sleep 2 && echo -e '\033[33m |---------- 用户更新完毕!!! ----------|\033[0m'
 }
 
@@ -89,6 +89,9 @@ base_set_ssh() {
 }
 
 base_set_other() {
+	#去掉wget时候显示的英国中部时间
+	[! -f "/usr/bin/msgunfmt" ]; echo "msgunfmt not found !";sleep 2; /usr/bin/msgunfmt /usr/share/locale/zh_CN/LC_MESSAGES/wget.mo -o - |sed 's/eta(英国中部时间)/ETA/' | msgfmt - -o/tmp/zh_CN.mo
+	/bin/cp -f /tmp/zh_CN.mo /usr/share/locale/zh_CN/LC_MESSAGES/wget.mo
 	#登陆密码超过5次错误，锁定180秒
 	[ -z "`cat /etc/pam.d/system-auth | grep 'pam_tally2.so'`" ] && sed -i '4a auth        required      pam_tally2.so deny=5 unlock_time=180' /etc/pam.d/system-auth
 	#默认VIM开启高亮模式
@@ -134,8 +137,8 @@ echo -e '\033[33m |---------- SYSCTL设置完毕!!! ----------|\033[0m'
 }
 
 base_add_dir() {
-	mkdir -p /export/{App,Config,Log,MySQLData,Service,Server,Shell,Zookeeper}
-	mkdir -p /export/Log/{mysql,nginx,php-fpm,httpd}
+	mkdir -p /export/{App,Config,Log,MySQLData,Service,Server,Shell}
+	mkdir -p /export/Log/{mysql,nginx,php-fpm,debug}
 	chown -R mysql.mysql /export/MySQLData
 	chown -R mysql.mysql /export/Log/mysql
 	chown -R www.www /export/Log/nginx
