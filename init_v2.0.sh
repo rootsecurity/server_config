@@ -3,9 +3,9 @@
 
 ##----------------------------##
 # @Time:2015-10-30 11:30:06    #
-# @Debug:2016-05-29 19:26:38   #
+# @Debug:2016-11-19 19:26:38   #
 # @rootsecurity                #
-# @Ver:2.31                    #
+# @Ver:3.06                    #
 ##----------------------------##
 
 #判断用户是否为ROOT权限
@@ -146,6 +146,25 @@ base_add_dir() {
 	echo -e '\033[33m |---------- 系统目录设置完毕!!! ----------|\033[0m'
 }
 
+base_use_meminfo(){
+	a=`awk '/MemTotal/{total=$2}/MemFree/{free=$2}/Buffers/{buffers=$2}/^Cached/{cached=$2}END{print (total-free-buffers-cached)/1024/1024}'  /proc/meminfo` 
+        b=`free -g |grep Mem |awk  '{print $2}'`
+        mem_usege=`echo "scale=2;$a/$b*100"|bc`
+        echo -e "\n\nmem_usege:\n$mem_usege%\n\n"
+}
+
+base_use_cpuinfo(){
+        a=(`cat /proc/stat | grep -E "cpu\b" | awk -v total=0 '{$1="";for(i=2;i<=NF;i++){total+=$i};used=$2+$3+$4+$7+$8 }END{print total,used}'`)
+        sleep 5
+        b=(`cat /proc/stat | grep -E "cpu\b" | awk -v total=0 '{$1="";for(i=2;i<=NF;i++){total+=$i};used=$2+$3+$4+$7+$8 }END{print total,used}'`)
+        c=(${a[1]}-${b[1]})*100
+        d=(${a[0]}-${b[0]})
+        e=`echo $[c]`
+        f=`echo $[d]`
+        cpu_usage=`echo "scale=2;$e/$f*100"|bc`
+	echo -e "\n\ncpu_usage:\n$cpu_usage%\n\n"
+}
+
 base_set_services() {
 for service_off in cups abrt-cpp abrtd acpid auditd blk-availability kdump iptables ip6tables; do chkconfig --level 2345 $service_off off;done
 for service_on in atd crond sshd portreserve netfs messagebus mdmonitor network rsyslog sysstat udev-post; do chkconfig --level 2345 $service_on on;done
@@ -183,6 +202,12 @@ case $1 in
 		;;
 	add_www_user)
 		base_add_www_user
+		;;
+	meminfo)
+		base_use_meminfo
+		;;
+	cpuinfo)
+		base_use_cpuinfo
 		;;
 	ssh)
 		base_set_ssh
